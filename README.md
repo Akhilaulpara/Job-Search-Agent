@@ -1,133 +1,211 @@
-# Job Search Agent with Bright Data and Nebius Token Factory
+# 📄 Job Search Agent
 
-![GIF](./assets/job-search.gif)
+An AI-powered job matching application that analyzes your resume and recommends the most relevant job opportunities from multiple job portals — complete with relevance scoring, personalized career advice, and a sleek dark-mode UI.
 
-A powerful AI-powered job search agent that analyzes LinkedIn profiles and finds relevant job opportunities using Bright Data for web scraping and Nebius Token Factory for intelligent analysis.
+Built with **Streamlit**, **Nebius AI** (Llama 3.3 70B), and a multi-source job aggregation engine.
 
-## Features
+---
 
-- LinkedIn Profile Analysis
+## ✨ Features
 
-  - Professional experience and career progression
-  - Education and certifications
-  - Core skills and expertise
-  - Industry reputation
+- 📑 **Smart Resume Parsing** — Extracts text from PDF and DOCX resumes
+- 🧠 **AI-Powered Analysis** — Uses Llama 3.3 70B via Nebius to extract:
+  - Professional Experience & Career Progression (with durations like "2 yrs 3 months")
+  - Education & Certifications
+  - Core Skills & Expertise (grouped by category)
+  - Domain Classification (Software Engineering, Design, Product Management, etc.)
+  - Career Highlights
+- 🎯 **Domain Detection** — Auto-detects the best-fit job role keyword
+- 💼 **Multi-Portal Job Aggregation** — Fetches live jobs from **5 free APIs** + adds **7 curated search portals**:
+  - **Live API sources:** Remotive, Jobicy, Arbeitnow, The Muse, Himalayas
+  - **Search portals:** LinkedIn, Indeed, Glassdoor, Wellfound (AngelList), Dice, SimplyHired, ZipRecruiter
+- 📊 **Relevance Scoring** — Each job is scored 0–100 based on title and skill match. Only jobs scoring **≥ 50** are displayed.
+- 🌟 **Personalized Recommendations** — AI career advisor tailors suggestions to your specific profile
+- 🌙 **Professional Dark Mode UI** — Polished, user-friendly interface with custom styling
 
-- Intelligent Job Matching
+---
 
-  - Domain classification (Software Engineering, Design, Product Management, etc.)
-  - Y Combinator job board integration
-  - Personalized job recommendations
-  - Direct application links
-
-- Modern Web Interface
-  - Real-time analysis
-  - Interactive results display
-  - Progress tracking
-  - Error handling
-
-## How it Works
-
-![Gif](./assets/job-search-agent.gif)
-
-## Prerequisites
-
-Before running this project, make sure you have:
-
-- Python 3.10 or higher
-- A [Bright Data](https://brightdata.com/) account and API credentials
-- [Nebius Token Factory](https://tokenfactory.nebius.com/) account and API key
-
-## Project Structure
+## 📂 Project Structure
 
 ```
-job_finder_agent/
-├── app.py              # Streamlit web interface
-├── job_agents.py       # AI agent definitions and analysis logic
-├── mcp_server.py       # Bright Data MCP server management
-├── requirements.txt    # Python dependencies
-├── assets/            # Static assets (images, GIFs)
-└── .env              # Environment variables (create this)
+resume-job-matcher/
+├── .streamlit/
+│   └── config.toml          # Streamlit dark theme config
+├── assets/
+│   └── Nebius.png           # Optional logo (can be removed)
+├── app.py                   # Streamlit main app
+├── job_agents.py            # AI agents for resume analysis & recommendations
+├── job_scraper.py           # Multi-portal job fetching engine
+├── resume_parser.py         # PDF/DOCX text extraction
+├── requirements.txt         # Python dependencies
+├── .env                     # Environment variables (not committed)
+└── README.md
 ```
 
-## Installation
+---
 
-1. Clone the repository:
+## 🛠️ Tech Stack
+
+| Component         | Technology                          |
+| ----------------- | ----------------------------------- |
+| Frontend          | Streamlit                           |
+| LLM Backend       | Nebius AI (Llama 3.3 70B Instruct)  |
+| Agent Framework   | OpenAI Agents SDK                   |
+| Resume Parsing    | pdfplumber, python-docx             |
+| Job APIs          | Remotive, Jobicy, Arbeitnow, The Muse, Himalayas |
+| HTTP Client       | requests                            |
+
+---
+
+## 🚀 Getting Started
+
+### Prerequisites
+
+- Python **3.10+**
+- A free **Nebius API key** — sign up at [https://studio.nebius.com](https://studio.nebius.com)
+
+### 1. Clone the repository
 
 ```bash
-git clone https://github.com/Arindam200/awesome-ai-apps.git
-cd advance_ai_agents/job_finder_agent
+git clone https://github.com/<your-username>/resume-job-matcher.git
+cd resume-job-matcher
 ```
 
-2. Create a virtual environment:
+### 2. Create a virtual environment
 
 ```bash
 python -m venv venv
-source venv/bin/activate  # On Windows, use: venv\Scripts\activate
+source venv/bin/activate     # macOS / Linux
+venv\Scripts\activate        # Windows
 ```
 
-3. Install dependencies:
+### 3. Install dependencies
 
 ```bash
-# Using pip
 pip install -r requirements.txt
-
-# Or using uv (recommended)
-uv sync
 ```
 
-## Configuration
+If you don't have a `requirements.txt`, create one with:
 
-Create a `.env` file in the project root with:
-
+```txt
+streamlit
+nest-asyncio
+python-dotenv
+pdfplumber
+python-docx
+openai
+openai-agents
+requests
 ```
-NEBIUS_API_KEY="Your Nebius API Key"
-BRIGHT_DATA_API_KEY="Your Bright Data API Key"
-BROWSER_AUTH="Your Bright Data Browser Auth"
+
+### 4. Configure environment variables (optional)
+
+Create a `.env` file in the project root:
+
+```env
+NEBIUS_API_KEY=your_nebius_api_key_here
 ```
 
-## Usage
+> You can also enter the API key directly in the app's sidebar at runtime.
 
-1. Start the application:
+### 5. Set up dark mode (recommended)
+
+Create a `.streamlit/config.toml` file:
+
+```toml
+[theme]
+base = "dark"
+primaryColor = "#3b82f6"
+backgroundColor = "#0f1117"
+secondaryBackgroundColor = "#161b27"
+textColor = "#e2e8f0"
+font = "sans serif"
+```
+
+### 6. Run the app
 
 ```bash
 streamlit run app.py
 ```
 
-2. Open your browser at http://localhost:8501
+The app will open at [http://localhost:8501](http://localhost:8501).
 
-3. Enter your Nebius API key in the sidebar
+---
 
-4. Input a LinkedIn profile URL to analyze
+## 🧭 How to Use
 
-5. Click "Analyze Profile" and wait for results
+1. **Upload** your resume (PDF or DOCX) in the sidebar
+2. **Enter** your Nebius API key
+3. Click **🔍 Analyze Resume**
+4. Wait a few seconds while the AI analyzes your profile and fetches matching jobs
+5. Browse:
+   - Your detailed candidate profile
+   - Personalized career recommendations
+   - Live job postings ranked by relevance score
+   - Direct deep-link searches to top job portals
 
-## How It Works
+---
 
-1. **Profile Analysis**: The LinkedIn Profile Analyzer agent extracts key information from the provided LinkedIn profile.
+## 🎯 Relevance Scoring System
 
-2. **Domain Classification**: The Job Suggestions agent identifies the primary professional domain and confidence score.
+Each job is scored **0–100** based on:
 
-3. **Job Matching**: The system searches Y Combinator's job board for relevant positions based on the identified domain.
+- **50 points** — How well the job title matches your target role
+- **50 points** — How many of your detected skills appear in the job title or description
 
-4. **URL Processing**: Job application URLs are processed to provide direct application links.
+Jobs are categorized as:
 
-5. **Summary Generation**: A comprehensive report is generated with profile analysis, skill assessment, and job recommendations.
+| Score   | Badge                |
+| ------- | -------------------- |
+| 85–100  | 🟢 Excellent Match   |
+| 70–84   | 🟡 Good Match        |
+| 50–69   | 🟠 Partial Match     |
+| < 50    | ❌ Filtered out       |
 
-## Technical Details
+---
 
-- Uses Streamlit for the web interface
-- Implements asynchronous processing with asyncio
-- Leverages Bright Data's MCP server for web scraping
-- Utilizes Nebius Token Factory's Llama-3.3-70B-Instruct model for analysis
-- Implements proper error handling and logging
+## 🔌 Job Portal Coverage
 
-## Contributing
+| Portal         | Type            | Description                                   |
+| -------------- | --------------- | --------------------------------------------- |
+| Remotive       | Live API        | Remote jobs across all categories             |
+| Jobicy         | Live API        | Curated remote-friendly listings              |
+| Arbeitnow      | Live API        | European-focused job board                    |
+| The Muse       | Live API        | Mid-to-senior career roles                    |
+| Himalayas      | Live API        | Remote-first companies                        |
+| LinkedIn       | Deep-link       | World's largest professional network          |
+| Indeed         | Deep-link       | Largest general job aggregator                |
+| Glassdoor      | Deep-link       | Jobs + company reviews                        |
+| Wellfound      | Deep-link       | Startup-focused (formerly AngelList)          |
+| Dice           | Deep-link       | Tech-specialized                              |
+| SimplyHired    | Deep-link       | Broad job aggregator                          |
+| ZipRecruiter   | Deep-link       | Fast-apply listings                           |
 
-Contributions are welcome! Please feel free to submit a Pull Request.
+---
 
-## Acknowledgments
+## 📸 Screenshots
 
-- [Bright Data](https://brightdata.com/) for web scraping capabilities
-- [Nebius Token Factory](https://tokenfactory.nebius.com/) for AI model access
-- [Streamlit](https://streamlit.io/) for the web interface framework
+> _Add your own screenshots here once deployed._
+
+---
+
+## 🤝 Contributing
+
+Contributions are welcome! Feel free to:
+
+1. Fork the repo
+2. Create a feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit your changes (`git commit -m 'Add amazing feature'`)
+4. Push to the branch (`git push origin feature/amazing-feature`)
+5. Open a Pull Request
+
+---
+
+## 🙏 Acknowledgements
+
+- [Nebius AI Studio](https://studio.nebius.com) — for free LLM API access
+- [Meta Llama 3.3](https://llama.meta.com) — for the underlying model
+- [Streamlit](https://streamlit.io) — for the beautiful Python UI framework
+- [Remotive](https://remotive.com), [Jobicy](https://jobicy.com), [Arbeitnow](https://arbeitnow.com), [The Muse](https://www.themuse.com), [Himalayas](https://himalayas.app) — for free public job APIs
+
+
