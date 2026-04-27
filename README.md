@@ -186,6 +186,9 @@ Jobs are categorized as:
 ## 📸 Screenshots
 
 <img width="1893" height="794" alt="Image" src="https://github.com/user-attachments/assets/a53115bb-ad49-4397-9fb2-c7db35e5c507" />
+
+
+
 <img width="1885" height="779" alt="Image" src="https://github.com/user-attachments/assets/4b769af5-deb7-4984-968e-cdfbb5b17855" />
 
 ---
